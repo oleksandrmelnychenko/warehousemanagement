@@ -19,6 +19,8 @@ namespace TestApp.ViewModels
     {
         private readonly INavigationService _navigationService;
 
+        private MSALClientHelper _helper;
+
         [RelayCommand]
         void OpenMenu()
         {
@@ -41,16 +43,9 @@ namespace TestApp.ViewModels
             {
                 if (UserAccount.AuthenticationResult == null)
                 {
-                    var helper = new MSALClientHelper();
+                    _helper = new MSALClientHelper();
 
-                    UserAccount.AuthenticationResult = await helper.InitializePublicClientAppAsync();
-
-                   // UserAccount.AuthenticationResult = await helper.RefreshTokenAsync();
-
-                   var tt = await helper.PublicClientApplication.GetAccountsAsync();
-
-                    var x = await helper.PublicClientApplication.AcquireTokenSilent(new string[] { UserAccount.AuthenticationResult.IdToken, "https://api.businesscentral.dynamics.com/.default" },
-                        UserAccount.AuthenticationResult.Account).ExecuteAsync();
+                    UserAccount.AuthenticationResult = await _helper.InitializePublicClientAppAsync();
 
                     WeakReferenceMessenger.Default.Send(new AuthenticationMessage(UserAccount.AuthenticationResult));
 
@@ -74,6 +69,37 @@ namespace TestApp.ViewModels
             }
         }
 
+        [RelayCommand]
+        async Task TestSilent()
+        {
+            if (_helper == null)
+            {
+                return;
+            }
+
+            try
+            {
+                var authResultWithSilentMode = await _helper.RefreshTokenAsync(_helper);
+
+                UserAccount.AuthenticationResult = authResultWithSilentMode;
+
+                WeakReferenceMessenger.Default.Send(new AuthenticationMessage(UserAccount.AuthenticationResult));
+
+                await _navigationService.GoToAsync<PurchaseHeadersPageViewModel>();
+            }
+            catch (MsalUiRequiredException ex)
+            {
+                // This executes UI interaction to obtain token
+                Debug.WriteLine($"-------------ERROR({nameof(MainPageViewModel)}):{ex.Message}");
+                AuthenticationResult result = null;
+                UserAccount.AuthenticationResult = result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"-------------ERROR({nameof(MainPageViewModel)}):{ex.Message}");
+            }
+        }
+
         public MainPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _navigationService = navigationService;
@@ -81,23 +107,6 @@ namespace TestApp.ViewModels
             Title = "Authorization";
         }
 
-        private readonly string GraphUrl = "https://graph.microsoft.com/v1.0/me";
 
-        private async Task<User> RefreshUserDataAsync(string token)
-        {
-            HttpClient client = new HttpClient();
-            HttpRequestMessage message = new HttpRequestMessage(HttpMethod.Get, this.GraphUrl);
-            message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
-            HttpResponseMessage response = await client.SendAsync(message);
-            User currentUser = null;
-
-            if (response.IsSuccessStatusCode)
-            {
-                string json = await response.Content.ReadAsStringAsync();
-                currentUser = JsonSerializer.Deserialize<User>(json);
-            }
-
-            return currentUser;
-        }
     }
 }

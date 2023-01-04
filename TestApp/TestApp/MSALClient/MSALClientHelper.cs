@@ -1,6 +1,8 @@
-﻿using Microsoft.Graph;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Graph;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
+using System.Diagnostics;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace TestApp.MSALClient
@@ -25,11 +27,30 @@ namespace TestApp.MSALClient
                .WithIosKeychainSecurityGroup("com.microsoft.adalcache");
         }
 
-        public async Task<AuthenticationResult> RefreshTokenAsync() {
-            AuthenticationResult = await this.PublicClientApplication
-                            .AcquireTokenSilent(AppConstants.Scopes, Microsoft.Identity.Client.PublicClientApplication.OperatingSystemAccount)
-                            .ExecuteAsync()
-                            .ConfigureAwait(false);
+        public async Task<AuthenticationResult> RefreshTokenAsync(MSALClientHelper helper)
+        {
+            try
+            {
+                var accounts = await helper.PublicClientApplication.GetAccountsAsync();
+                if (accounts == null || accounts.Count() > 1)
+                {
+                    return AuthenticationResult;
+                }
+                var account = accounts.SingleOrDefault();
+
+                AuthenticationResult =
+                    await helper.PublicClientApplication.AcquireTokenSilent(AppConstants.Scopes, account)
+                    .WithForceRefresh(true)
+                    .ExecuteAsync();
+            }
+            catch (MsalUiRequiredException ex)
+            {
+                Debug.WriteLine($"-------------ERROR({nameof(MainPageViewModel)}):{ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"-------------ERROR({nameof(MainPageViewModel)}):{ex.Message}");
+            }
 
             return AuthenticationResult;
         }
@@ -51,35 +72,7 @@ namespace TestApp.MSALClient
                 .ExecuteAsync()
                 .ConfigureAwait(false);
 
-            //var tt = await AttachTokenCache(); 
-
             return AuthenticationResult;
         }
-
-        /// <summary>
-        /// Attaches the token cache to the Public Client app.
-        /// </summary>
-        /// <returns>IAccount list of already signed-in users (if available)</returns>
-        private async Task<IEnumerable<IAccount>> AttachTokenCache()
-        {   
-            var storageProperties = new StorageCreationPropertiesBuilder("netcore_maui_cache.txt", "D:/temp")
-                    .Build();
-
-            var msalcachehelper = await MsalCacheHelper.CreateAsync(storageProperties);
-            msalcachehelper.RegisterCache(PublicClientApplication.UserTokenCache);
-
-            // If the cache file is being reused, we'd find some already-signed-in accounts
-            return await PublicClientApplication.GetAccountsAsync().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Sign in user using MSAL and obtain a token for MS Graph
-        /// </summary>
-        /// <returns>GraphServiceClient</returns>
-        //private async Task<GraphServiceClient> SignInAndInitializeGraphServiceClient()
-        //{
-        //    string token = await this.MSALClient.SignInUserAndAcquireAccessToken(this.GraphScopes);
-        //    return await InitializeGraphServiceClientAsync(token);
-        //}
     }
 }

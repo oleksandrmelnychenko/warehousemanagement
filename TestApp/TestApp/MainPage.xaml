@@ -7,10 +7,17 @@
                        x:DataType="vm:MainPageViewModel"
                        ControlTemplate="{StaticResource MainControlTemplate}"
                        Shell.NavBarIsVisible="False">
-    <Button WidthRequest="120"
-            HeightRequest="40"
-            HorizontalOptions="Center"
-            SemanticProperties.Hint="Sign In"
-            Command="{Binding SignInCommand}"
-            Text="Sign in" />
+    <VerticalStackLayout Spacing="20" VerticalOptions="Center">
+        <Button WidthRequest="120"
+                HeightRequest="40"
+                HorizontalOptions="Center"
+                SemanticProperties.Hint="Sign In"
+                Command="{Binding SignInCommand}"
+                Text="Sign in" />
+        <Button WidthRequest="120"
+                HeightRequest="40"
+                HorizontalOptions="Center"
+                Command="{Binding TestSilentCommand}"
+                Text="Test Silent" />
+    </VerticalStackLayout>
 </views:BaseContentPage>
