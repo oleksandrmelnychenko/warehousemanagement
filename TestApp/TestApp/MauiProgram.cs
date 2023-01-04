@@ -20,9 +20,7 @@ public static class MauiProgram
         builder.UseMauiCommunityToolkit();
 
         builder.Services.AddSingleton<AppShell>();
-        builder.Services.AddSingleton<AppShellViewModel>();
-        //builder.Services.AddSingleton<MainPage>();
-        //builder.Services.AddSingleton<MainPageViewModel>();
+        builder.Services.AddSingleton<AppShellViewModel>();      
         builder.Services.AddSingleton<INavigationService, NavigationService>();
 
         builder.Services.AddTransientWithShellRoute<PurchaseHeadersPage, PurchaseHeadersPageViewModel>();

@@ -27,8 +27,6 @@ namespace TestApp.ViewModels
             {
                 AuthenticationResult = s.AuthenticationResult;
             });            
-        }
-
-         
+        }         
     }
 }

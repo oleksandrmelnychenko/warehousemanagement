@@ -11,18 +11,18 @@
        Shell.FlyoutBehavior="Flyout">
 
     <Shell.FlyoutHeader>
-        <VerticalStackLayout>
+        <VerticalStackLayout Margin="0,20">
             <Image Source="no_profile_image.png" />
             <Label HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   FontSize="18"
+                   FontSize="14"
                    TextColor="White"
-                   Text="User" />
+                   Text="{Binding AuthenticationResult.Account.Username, FallbackValue='user'}" />
             <Label HorizontalOptions="Center"
                    VerticalOptions="Center"
-                   FontSize="18"
+                   FontSize="14"
                    TextColor="White"
-                   Text="Email" />
+                   Text="{Binding AuthenticationResult.Account.Environment, FallbackValue='enviroment'}" />
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
@@ -31,13 +31,15 @@
             <Label Style="{StaticResource CommonUIFieldCheckmarkLabel}"
                    Margin="20,0,0,0"
                    HorizontalOptions="Center"
+                   VerticalOptions="Center"
                    FontAttributes="Bold"
                    FontSize="22"
                    TextColor="White"
                    Text="{x:Static ic:Icons.LogOut}" />
             <Label Style="{StaticResource TitleLabel}"
-                   Margin="10,0,0,0"
+                   Margin="10,0,0,4"
                    HorizontalOptions="Center"
+                   VerticalOptions="Center"
                    TextColor="White"
                    Text="Log out">
                 <Label.GestureRecognizers>

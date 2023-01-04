@@ -39,6 +39,7 @@ namespace TestApp.ViewModels
         public PurchaseHeadersPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Purchase Headers";
+            
             _serializerOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -46,9 +47,7 @@ namespace TestApp.ViewModels
                 PropertyNameCaseInsensitive = true,
                 NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
             };
-            
         }
-
        
         public override Task Initialize(IDictionary<string, object> query)
         {
@@ -74,13 +73,7 @@ namespace TestApp.ViewModels
 
             try
             {
-                var result = await CallPurchaseHeaders();
-                
-                PurchaseHeaderModels = new ObservableCollection<PurchaseHeaderModel>(new()
-                {
-                    new PurchaseHeaderModel {No = 106002, DocumentType = "Invoice"},
-                    new PurchaseHeaderModel {No = 106003, DocumentType = "Invoice"}
-                });
+                var result = await CallPurchaseHeaders();             
 
                 if (result != null)
                 {
@@ -111,7 +104,6 @@ namespace TestApp.ViewModels
 
             return await Task.FromResult(_graphServiceClient);
         }
-
 
         private async Task<List<PurchaseHeaderModel>> CallPurchaseHeaders()
         {

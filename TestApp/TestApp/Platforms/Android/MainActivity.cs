@@ -18,10 +18,7 @@ public class MainActivity : MauiAppCompatActivity
         base.OnCreate(savedInstanceState);
         // configure platform specific params
         PlatformConfig.Instance.RedirectUri = AndroidRedirectURI;
-        PlatformConfig.Instance.ParentWindow = this;
- 
-        
-
+        PlatformConfig.Instance.ParentWindow = this;       
     }
 
     /// <summary>
