@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="TestApp.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:ic="clr-namespace:TestApp.FontIcons"
+       xmlns:local="clr-namespace:TestApp"
+       xmlns:views="clr-namespace:TestApp.Views"
+       xmlns:vm="clr-namespace:TestApp.ViewModels"
+       x:DataType="vm:AppShellViewModel"
+       FlyoutBackground="{StaticResource Primary}"
+       Shell.FlyoutBehavior="Flyout">
+
+    <Shell.FlyoutHeader>
+        <VerticalStackLayout>
+            <Image Source="no_profile_image.png" />
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="18"
+                   TextColor="White"
+                   Text="User" />
+            <Label HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   FontSize="18"
+                   TextColor="White"
+                   Text="Email" />
+        </VerticalStackLayout>
+    </Shell.FlyoutHeader>
+
+    <Shell.FlyoutFooter>
+        <HorizontalStackLayout HeightRequest="60">
+            <Label Style="{StaticResource CommonUIFieldCheckmarkLabel}"
+                   Margin="20,0,0,0"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   FontSize="22"
+                   TextColor="White"
+                   Text="{x:Static ic:Icons.LogOut}" />
+            <Label Style="{StaticResource TitleLabel}"
+                   Margin="10,0,0,0"
+                   HorizontalOptions="Center"
+                   TextColor="White"
+                   Text="Log out">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding LogoutCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+    </Shell.FlyoutFooter>
+
+    <ShellContent Title="Login"
+                  ContentTemplate="{DataTemplate local:MainPage}"
+                  FlyoutItemIsVisible="False"
+                  Route="initial" />
+
+    <ShellContent Title="Purchase Headers"
+                  IsVisible="{Binding AuthenticationResult, Converter={StaticResource IsNotNullConverter}}"
+                  ContentTemplate="{DataTemplate views:PurchaseHeadersPage}"
+                  Icon="{FontImage FontFamily=FI,
+                                   Glyph={x:Static ic:Icons.ChevronsRight},
+                                   Color={StaticResource Blue100Accent}}"
+                  Route="purchaseHeaders" />
+</Shell>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseContentPage x:Class="TestApp.Views.PurchaseLinesPage"
+                       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:models="clr-namespace:TestApp.Models"
+                       xmlns:views="clr-namespace:TestApp.Views"
+                       xmlns:vm="clr-namespace:TestApp.ViewModels"
+                       Title="PurchaseLinesPage"
+                       x:DataType="vm:PurchaseLinesPageViewModel">
+    <Grid Margin="10,0">
+        <Label IsVisible="{Binding IsLoading}"
+               Style="{StaticResource DescriptionLabel}"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               TextColor="{StaticResource Gray500}"
+               Text="Loading..." />
+
+        <CollectionView SelectionMode="Single"
+                        SelectionChangedCommand="{Binding ItemSelectedCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}"
+                        ItemsSource="{Binding PurchaseLineModels}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="8" Orientation="Vertical" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.Header>
+                <Rectangle HeightRequest="15" />
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:PurchaseLineModel">
+                    <Grid ColumnSpacing="10" ColumnDefinitions="auto,*">
+                        <Label Grid.Column="0"
+                               Style="{StaticResource TitleLabel}"
+                               Text="{Binding No}" />
+                        <Label Grid.Column="1"
+                               Style="{StaticResource DescriptionLabel}"
+                               Text="{Binding DocumentType}" />
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup Name="CommonStates">
+                                <VisualState Name="Normal" />
+                                <VisualState Name="Selected">
+                                    <VisualState.Setters>
+                                        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Cyan300Accent}, Dark={StaticResource Gray100Brush}}" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <Rectangle HeightRequest="15" />
+            </CollectionView.Footer>
+        </CollectionView>
+    </Grid>
+</views:BaseContentPage>
