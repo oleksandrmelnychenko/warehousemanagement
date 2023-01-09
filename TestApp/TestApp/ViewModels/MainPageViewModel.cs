@@ -1,17 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Graph;
 using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using TestApp.Models;
 using TestApp.MSALClient;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace TestApp.ViewModels
 {
@@ -26,9 +18,7 @@ namespace TestApp.ViewModels
         {
             try
             {
-#pragma warning disable CA1416 // Validate platform compatibility
-                Shell.Current.FlyoutIsPresented = true;
-#pragma warning restore CA1416 // Validate platform compatibility
+                Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
             }
             catch (Exception ex)
             {

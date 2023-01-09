@@ -27,8 +27,8 @@ namespace TestApp.Models
         public long Vat { get; set; }
         public long LineDiscount { get; set; }
         public long LineDiscountAmount { get; set; }
-        public long Amount { get; set; }
-        public long AmountIncludingVat { get; set; }
+        public double Amount { get; set; }
+        public double AmountIncludingVat { get; set; }
         public double UnitPriceLcy { get; set; }
         public bool AllowInvoiceDisc { get; set; }
         public double GrossWeight { get; set; }
@@ -41,7 +41,7 @@ namespace TestApp.Models
         public string JobNo { get; set; }
         public long IndirectCost { get; set; }
         public bool RecalculateInvoiceDisc { get; set; }
-        public long OutstandingAmount { get; set; }
+        public double OutstandingAmount { get; set; }
         public long QtyRcdNotInvoiced { get; set; }
         public long AmtRcdNotInvoiced { get; set; }
         public long QuantityReceived { get; set; }
@@ -73,15 +73,15 @@ namespace TestApp.Models
         public string VatBusPostingGroup { get; set; }
         public string VatProdPostingGroup { get; set; }
         public string CurrencyCode { get; set; }
-        public long OutstandingAmountLcy { get; set; }
+        public double OutstandingAmountLcy { get; set; }
         public long AmtRcdNotInvoicedLcy { get; set; }
         public long ReservedQuantity { get; set; }
         public string BlanketOrderNo { get; set; }
         public long BlanketOrderLineNo { get; set; }
-        public long VatBaseAmount { get; set; }
+        public double VatBaseAmount { get; set; }
         public double UnitCost { get; set; }
         public bool SystemCreatedEntry { get; set; }
-        public long LineAmount { get; set; }
+        public double LineAmount { get; set; }
         public long VatDifference { get; set; }
         public long InvDiscAmountToInvoice { get; set; }
         public string VatIdentifier { get; set; }
@@ -110,7 +110,7 @@ namespace TestApp.Models
         public long PrepmtVatDiffToDeduct { get; set; }
         public long PrepmtVatDiffDeducted { get; set; }
         public string IcItemReferenceNo { get; set; }
-        public long OutstandingAmtExVatlcy { get; set; }
+        public double OutstandingAmtExVatlcy { get; set; }
         public long ARcdNotInvExVatlcy { get; set; }
         public long PmtDiscountAmount { get; set; }
         public long PrepmtPmtDiscountAmount { get; set; }

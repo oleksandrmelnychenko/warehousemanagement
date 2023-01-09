@@ -1,11 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using Microsoft.Graph;
 using Microsoft.Identity.Client;
-using System.Net.Http.Headers;
 using TestApp.Models;
-using TestApp.MSALClient;
 
 namespace TestApp.ViewModels
 {

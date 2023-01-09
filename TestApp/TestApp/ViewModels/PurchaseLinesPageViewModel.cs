@@ -12,9 +12,7 @@ namespace TestApp.ViewModels
 {
     public sealed partial class PurchaseLinesPageViewModel : ViewModelBase
     {
-        private readonly JsonSerializerOptions _serializerOptions;
-
-        private string _accesToken = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyIsImtpZCI6Ii1LSTNROW5OUjdiUm9meG1lWm9YcWJIWkdldyJ9.eyJhdWQiOiJodHRwczovL2FwaS5idXNpbmVzc2NlbnRyYWwuZHluYW1pY3MuY29tIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMGFiYjE2MDItMTRkYS00Njg3LTg5NzgtZTliMzM1ZjgyNTE3LyIsImlhdCI6MTY3MjY3OTA5MSwibmJmIjoxNjcyNjc5MDkxLCJleHAiOjE2NzI2ODQxMzgsImFjciI6IjEiLCJhaW8iOiJBVFFBeS84VEFBQUFTUTNtVVF1TWZPUFA2ZkJ5aUVQZjFpMVpnUUpoQyt1d1JrSzh5ZGtBK0ZGQ1RROGg0N284czdzWWpIbGU5emU0IiwiYW1yIjpbInB3ZCJdLCJhcHBpZCI6IjBhZmUwOGQ1LWMwYzItNDNkZC04OTNlLTM2NzI0NDJmMGEwMyIsImFwcGlkYWNyIjoiMSIsImZhbWlseV9uYW1lIjoiSGF5IiwiZ2l2ZW5fbmFtZSI6IkplZmYiLCJpcGFkZHIiOiI3OC4xNTIuMTc1LjY3IiwibmFtZSI6IkplZmYgSGF5Iiwib2lkIjoiOTk0NDU0YzktM2E5MC00ZjBlLWE2ODItMWExMGU5ODE3MDFmIiwicHVpZCI6IjEwMDMyMDAyNTlEMDAxMEMiLCJyaCI6IjAuQVh3QUFoYTdDdG9VaDBhSmVPbXpOZmdsRnozdmJabHNzMU5CaGdlbV9Ud0J1Si03QUJjLiIsInNjcCI6IkZpbmFuY2lhbHMuUmVhZFdyaXRlLkFsbCB1c2VyX2ltcGVyc29uYXRpb24iLCJzdWIiOiJWQVhzRm4wcmtfWEV0RGNOZVpTajhzZllnYXJLTGw4a1dXWEFzVEtVaVQ4IiwidGlkIjoiMGFiYjE2MDItMTRkYS00Njg3LTg5NzgtZTliMzM1ZjgyNTE3IiwidW5pcXVlX25hbWUiOiJqZWZmaEBDUk1iYzM0NjQ4OS5Pbk1pY3Jvc29mdC5jb20iLCJ1cG4iOiJqZWZmaEBDUk1iYzM0NjQ4OS5Pbk1pY3Jvc29mdC5jb20iLCJ1dGkiOiJUaVlDRWtMUXVreVgxMndHaHRRREF3IiwidmVyIjoiMS4wIiwid2lkcyI6WyI2MmU5MDM5NC02OWY1LTQyMzctOTE5MC0wMTIxNzcxNDVlMTAiLCJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXX0.qzekT_501sQ7pS2S4mY6ihl2_vGuTTC7n1eFIfc6htDKHvjmq0rtYVAbvlVGfO1vDzsJylv9w2uD__5HuMN6fCUXnFNZFPg_IHK8Df9CyP-xx5Q_obHDjaTZ3Vps9jDcBBwyJxlPpb-V48zenkGG9Kry3c7gw1dvd10-EU24AqoguL8xqGIBhofGUsEYt-_eEMPBhCNv6B1_DGTwmaZFctu1sCYCGhoblaVRH9DSzpQ6frPfHegCVxfe-CgqRPkQYfbbmeIr8wAhxHazZMRllZRuymfF0FDjbDK19KLqm5hW4LPPPhqX488-F91y19nkfC6e7UKl3GkBo4jMOx_hYQ";
+        private readonly JsonSerializerOptions _serializerOptions;      
 
         [ObservableProperty]
         bool? isLoading;
@@ -25,13 +23,13 @@ namespace TestApp.ViewModels
         [RelayCommand]
         Task ItemSelected(PurchaseLineModel item)
         {
-
             return Task.CompletedTask;
         }
 
         public PurchaseLinesPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Purchase Lines";
+
             _serializerOptions = new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -39,10 +37,6 @@ namespace TestApp.ViewModels
                 PropertyNameCaseInsensitive = true,
                 NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
             };
-
-
-
-
         }
 
         public override Task Initialize(IDictionary<string, object> query)
