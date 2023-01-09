@@ -21,7 +21,6 @@
         <Label Grid.Row="0"
                Style="{StaticResource DescriptionLabel}"
                HorizontalOptions="Center"
-               BackgroundColor="Yellow"
                VerticalOptions="Center"
                TextColor="{StaticResource Gray500}"
                Text="{Binding Email}" />

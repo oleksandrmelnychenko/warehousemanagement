@@ -6,47 +6,102 @@
        xmlns:local="clr-namespace:TestApp"
        xmlns:views="clr-namespace:TestApp.Views"
        xmlns:vm="clr-namespace:TestApp.ViewModels"
-       x:DataType="vm:AppShellViewModel"
+       FlyoutBackdrop="#667BDDEF"
        FlyoutBackground="{StaticResource Primary}"
-       Shell.FlyoutBehavior="Flyout">
+       FlyoutHeaderBehavior="Fixed"
+       Shell.FlyoutBehavior="Disabled">
+
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid Padding="10" ColumnDefinitions="0.25*,0.75*">
+                <Image Source="{Binding Icon}" />
+                <Label Grid.Column="1"
+                       VerticalOptions="Center"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource White}"
+                       TranslationY="-1"
+                       Text="{Binding Title}" />
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                </VisualState.Setters>
+                            </VisualState>
+
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Cyan200Accent}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </VisualStateManager.VisualStateGroups>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid Padding="10" ColumnDefinitions="0.25*,0.75*">
+                <Image HeightRequest="20" Source="{Binding Icon}" />
+                <Label Grid.Column="1"
+                       VerticalOptions="Center"
+                       TextColor="{StaticResource White}"
+                       TranslationY="-1"
+                       FontAttributes="Bold"
+                       Text="{Binding Title}" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
 
     <Shell.FlyoutHeader>
-        <VerticalStackLayout Margin="0,20">
+        <VerticalStackLayout HeightRequest="55" Margin="0,20">
             <Image Source="no_profile_image.png" />
             <Label HorizontalOptions="Center"
                    VerticalOptions="Center"
                    FontSize="14"
                    TextColor="White"
                    Text="{Binding AuthenticationResult.Account.Username, FallbackValue='user'}" />
-            <Label HorizontalOptions="Center"
+            <Label Margin="0,0,0,15"
+                   HorizontalOptions="Center"
                    VerticalOptions="Center"
                    FontSize="14"
                    TextColor="White"
                    Text="{Binding AuthenticationResult.Account.Environment, FallbackValue='enviroment'}" />
+            <Line Margin="16,0"
+                  HorizontalOptions="Fill"
+                  BackgroundColor="#66ffffff" />
         </VerticalStackLayout>
     </Shell.FlyoutHeader>
 
     <Shell.FlyoutFooter>
-        <HorizontalStackLayout HeightRequest="60">
-            <Label Style="{StaticResource CommonUIFieldCheckmarkLabel}"
-                   Margin="20,0,0,0"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   FontAttributes="Bold"
-                   FontSize="22"
-                   TextColor="White"
-                   Text="{x:Static ic:Icons.LogOut}" />
-            <Label Style="{StaticResource TitleLabel}"
-                   Margin="10,0,0,4"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   TextColor="White"
-                   Text="Log out">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding LogoutCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
-        </HorizontalStackLayout>
+        <VerticalStackLayout HeightRequest="60">
+            <Line Margin="16,0"
+                  HorizontalOptions="Fill"
+                  BackgroundColor="#66ffffff" />
+            <HorizontalStackLayout Margin="0,15,0,0">
+                <Label Style="{StaticResource CommonUIFieldCheckmarkLabel}"
+                       Margin="20,0,0,0"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       FontAttributes="Bold"
+                       FontSize="22"
+                       TextColor="White"
+                       Text="{x:Static ic:Icons.LogOut}" />
+                <Label Style="{StaticResource TitleLabel}"
+                       Margin="10,0,0,4"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       TextColor="White"
+                       Text="Log out">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding LogoutCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
     </Shell.FlyoutFooter>
 
     <ShellContent Title="Login"
@@ -59,6 +114,9 @@
                   ContentTemplate="{DataTemplate views:PurchaseHeadersPage}"
                   Icon="{FontImage FontFamily=FI,
                                    Glyph={x:Static ic:Icons.ChevronsRight},
-                                   Color={StaticResource Blue100Accent}}"
+                                   Color={StaticResource White}}"
                   Route="purchaseHeaders" />
+
+    <MenuItem IconImageSource="{FontImage FontFamily=FI, Glyph={x:Static ic:Icons.Airplay}, Color={StaticResource White}}" Text="Some item" />
+
 </Shell>

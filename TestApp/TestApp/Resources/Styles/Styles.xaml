@@ -54,7 +54,7 @@
 
             <ContentPresenter Grid.Row="2" Grid.ColumnSpan="3" />
 
-            <Button Style="{StaticResource ChevronBackStyle}"
+            <Button Style="{StaticResource ChevronBackStyle}"                    
                     Command="{Binding OpenMenuCommand}"
                     Text="{x:Static ic:Icons.Menu}" />
 

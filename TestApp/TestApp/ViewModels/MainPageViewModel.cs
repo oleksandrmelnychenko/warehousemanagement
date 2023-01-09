@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Identity.Client;
 using System.Diagnostics;
@@ -13,11 +14,16 @@ namespace TestApp.ViewModels
 
         private MSALClientHelper _helper;
 
+        [ObservableProperty]
+        bool isLogged;
+
         [RelayCommand]
         void OpenMenu()
         {
             try
             {
+                UpdateFlyoutBehavior();
+
                 Shell.Current.FlyoutIsPresented = !Shell.Current.FlyoutIsPresented;
             }
             catch (Exception ex)
@@ -38,6 +44,10 @@ namespace TestApp.ViewModels
                     UserAccount.AuthenticationResult = await _helper.InitializePublicClientAppAsync();
 
                     WeakReferenceMessenger.Default.Send(new AuthenticationMessage(UserAccount.AuthenticationResult));
+
+                    IsLogged = UserAccount.AuthenticationResult != null;
+
+                    UpdateFlyoutBehavior();
 
                     await _navigationService.GoToAsync<PurchaseHeadersPageViewModel>();
                 }
@@ -97,6 +107,12 @@ namespace TestApp.ViewModels
             Title = "Authorization";
         }
 
-
+        private static void UpdateFlyoutBehavior()
+        {
+            if (Shell.Current.FlyoutBehavior != FlyoutBehavior.Flyout)
+            {
+                Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
+            }
+        }
     }
 }
